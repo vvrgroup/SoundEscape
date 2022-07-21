@@ -82,7 +82,7 @@ var Module = {
 // ================================================================================
 // *** HTML5 UE4 ***
 
-Module.arguments = ['../../../index/index.uproject','-stdout',];
+Module.arguments = ['../../../index.uproject','-stdout',];
 
 // UE4 Editor or UE4 Frontend with assets "cook on the fly"?
 if (location.host != "" && (location.search.indexOf('cookonthefly') != -1)) {
