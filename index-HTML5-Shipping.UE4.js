@@ -612,12 +612,12 @@ Module['instantiateWasm'] = function(info, receiveInstance) {
 			receiveInstance(instance, module);
 
 			// After a successful instantiation, attempt to save the compiled Wasm Module object to IndexedDB.
-			if (!downloadResults.fromIndexedDB) {
-				storeToIndexedDB(downloadResults.db, 'wasmModule', module).catch(function() {
+			//if (!downloadResults.fromIndexedDB) {
+				//storeToIndexedDB(downloadResults.db, 'wasmModule', module).catch(function() {
 					// If the browser did not support storing Wasm Modules to IndexedDB, try to store the Wasm instance instead.
-					return storeToIndexedDB(downloadResults.db, 'wasmBytes', downloadResults.wasmBytes);
-				});
-			}
+					//return storeToIndexedDB(downloadResults.db, 'wasmBytes', downloadResults.wasmBytes);
+				//});
+			//}
 		});
 	}).catch(function(error) {
 		$ ('#mainarea').empty();
