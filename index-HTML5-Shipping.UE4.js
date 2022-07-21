@@ -73,7 +73,7 @@ var Module = {
 	assetDownloadProgress: {}, // Track how many bytes of each needed asset has been downloaded so far.
 
 	UE4_indexedDBName: 'UE4_assetDatabase_index', // this should be an ascii ID string without special characters that is unique to the project that is being packaged
-	UE4_indexedDBVersion: 202207211254, // Bump this number to invalidate existing IDB storages in browsers.
+	UE4_indexedDBVersion: 202207211357, // Bump this number to invalidate existing IDB storages in browsers.
 };
 
 
@@ -82,12 +82,12 @@ var Module = {
 // ================================================================================
 // *** HTML5 UE4 ***
 
-//Module.arguments = ['../../../index/index.uproject','-stdout',];
+Module.arguments = ['../../../index/index.uproject','-stdout',];
 
 // UE4 Editor or UE4 Frontend with assets "cook on the fly"?
-//if (location.host != "" && (location.search.indexOf('cookonthefly') != -1)) {
-	//Module.arguments.push("'-filehostIp=" + location.protocol + "//" + location.host + "'");
-//}
+if (location.host != "" && (location.search.indexOf('cookonthefly') != -1)) {
+	Module.arguments.push("'-filehostIp=" + location.protocol + "//" + location.host + "'");
+}
 
 
 var UE4 = {
@@ -405,8 +405,8 @@ Module['UE4_fullscreenFilteringMode'] = 0;
 
 var enableReadFromIndexedDB = (location.search.indexOf('noidbread') == -1);
 var enableWriteToIndexedDB = enableReadFromIndexedDB && (location.search.indexOf('noidbwrite') == -1);
-enableReadFromIndexedDB = true;
-enableWriteToIndexedDB = true;
+enableReadFromIndexedDB = false;
+enableWriteToIndexedDB = false;
 
 if (!enableReadFromIndexedDB) showWarningRibbon('Running with IndexedDB access disabled.');
 else if (!enableWriteToIndexedDB) showWarningRibbon('Running in read-only IndexedDB access mode.');
@@ -612,12 +612,12 @@ Module['instantiateWasm'] = function(info, receiveInstance) {
 			receiveInstance(instance, module);
 
 			// After a successful instantiation, attempt to save the compiled Wasm Module object to IndexedDB.
-			//if (!downloadResults.fromIndexedDB) {
-				//storeToIndexedDB(downloadResults.db, 'wasmModule', module).catch(function() {
+			if (!downloadResults.fromIndexedDB) {
+				storeToIndexedDB(downloadResults.db, 'wasmModule', module).catch(function() {
 					// If the browser did not support storing Wasm Modules to IndexedDB, try to store the Wasm instance instead.
-					//return storeToIndexedDB(downloadResults.db, 'wasmBytes', downloadResults.wasmBytes);
-				//});
-			//}
+					return storeToIndexedDB(downloadResults.db, 'wasmBytes', downloadResults.wasmBytes);
+				});
+			}
 		});
 	}).catch(function(error) {
 		$ ('#mainarea').empty();
