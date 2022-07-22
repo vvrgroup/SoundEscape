@@ -73,7 +73,7 @@ var Module = {
 	assetDownloadProgress: {}, // Track how many bytes of each needed asset has been downloaded so far.
 
 	UE4_indexedDBName: 'UE4_assetDatabase_index', // this should be an ascii ID string without special characters that is unique to the project that is being packaged
-	UE4_indexedDBVersion: 202207211357, // Bump this number to invalidate existing IDB storages in browsers.
+	UE4_indexedDBVersion: 202207220823, // Bump this number to invalidate existing IDB storages in browsers.
 };
 
 
@@ -82,7 +82,7 @@ var Module = {
 // ================================================================================
 // *** HTML5 UE4 ***
 
-Module.arguments = ['.../index.uproject','-stdout',];
+Module.arguments = ['../../../index/index.uproject','-stdout',];
 
 // UE4 Editor or UE4 Frontend with assets "cook on the fly"?
 if (location.host != "" && (location.search.indexOf('cookonthefly') != -1)) {
